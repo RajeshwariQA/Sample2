@@ -308,7 +308,7 @@ describe('Venzi Automation', () => {
     //Validating successfull creation
         cy.wait(2000)
         cy.contains('New Strategic Account added successfully').should('exist')
-        cy.contains('QAonCloud').should('exist')
+     //   cy.contains('QAonCloud').should('exist')
       
  
   })
