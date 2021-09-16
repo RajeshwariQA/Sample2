@@ -1,0 +1,74 @@
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+    });
+
+describe('Venzi Automation', () => {
+
+  
+    it('Visit to the SuperAdmin Login page', () => {
+    //opens Login page of SuperAdmin
+        cy.visit('https://event-super-admin-ts.mithyalabs.com/')
+
+    //contains Email field
+        cy.contains('Email').should('exist')
+    //contins Password field
+        cy.contains('Password').should('exist')
+    //contains Submit button
+        cy.contains('Submit').should('exist')
+    //contains Reset Password button
+        cy.contains('Reset Password').should('exist')
+        
+        cy.wait(2000)
+    //input Email and Password with empty data
+        cy.get('[type=SUBMIT]').click()
+        cy.contains('Email is required').should('exist')
+        cy.contains('Password is required').should('exist')
+
+        cy.wait(1000)
+    //input invalid Email
+        cy.get('input[name=email]').type('test')
+        cy.get('input[name=password]').type('t1')
+        cy.contains('Invalid Email').should('exist')
+
+    
+        cy.wait(1000)
+    //clear text
+        cy.get('[name=email]').clear()
+        cy.get('[name=password]').clear()
+    //input valid Email and invalid Password
+        cy.wait(1000)
+        cy.get('input[name=email]').type('superadmin@eventtool.com')
+        cy.get('input[name=password]').type('test')
+        cy.get('[type=SUBMIT]').click()
+    //invalid error should exist
+        cy.contains('Please check username or password and try again.').should('exist')
+
+
+        cy.wait(1000)
+    //clear text
+        cy.get('[name=email]').clear()
+        cy.get('[name=password]').clear()
+    //input valid Password and invalid Email
+        cy.wait(1000)
+        cy.get('input[name=email]').type('test@test.com') 
+        cy.get('input[name=password]').type('97Z5$z@_')
+        cy.get('[type=SUBMIT]').click()
+    //invalid error should exist
+        cy.contains('Please check username or password and try again.').should('exist')
+
+
+        cy.wait(1000)
+    //clear text
+        cy.get('[name=email]').clear()
+        cy.get('[name=password]').clear()
+ 
+
+    //input valid Email and Password
+        cy.get('input[name=email]').type('superadmin@eventtool.com')
+        cy.get('input[name=password]').type('97Z5$z@_')
+        cy.get('[type=SUBMIT]').click()
+        cy.wait(6000)
+        
+    })
