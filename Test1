@@ -72,3 +72,245 @@ describe('Venzi Automation', () => {
         cy.wait(6000)
         
     })
+    //creating new client
+    it('Opening New Client', () => {
+        cy.get('.MuiFab-label > .MuiSvgIcon-root').click()
+
+    //Check the fields in the form
+        cy.contains('Client Name').should('exist')
+        cy.contains('Contact name').should('exist')
+        cy.contains('Contact email').should('exist')
+        cy.contains('SUBMIT').should('exist')
+       
+    //Check for the mandatory fields
+        cy.get('form > .MuiButtonBase-root > .MuiButton-label').click()
+        cy.wait(1000)
+        cy.get('#eventForm_3-helper-text').contains('Required')
+        cy.get('#eventForm_4-helper-text').contains('Required')
+        cy.get('#eventForm_5-helper-text').contains('Required')
+
+    //Validating 'Email' field
+        cy.get('#eventForm_5').type('raji')
+        cy.get('#eventForm_5-helper-text').contains('Invalid email')
+
+    //Create New client with valid input
+        cy.get('#eventForm_3').type('QA Auto')
+        cy.get('#eventForm_4').type('Tester')
+    //clear text
+        cy.get('[name=contactEmail]').clear()
+        cy.get('#eventForm_5').type('tester@qaoncloud.com')
+        cy.get('form > .MuiButtonBase-root > .MuiButton-label').click()
+        cy.wait(25000)
+        cy.contains('Client created successfully').should('exist')
+
+    })
+
+
+
+    it('Validating Info Tab', () => {
+
+        cy.contains('QA Auto').click()
+        cy.wait(5000)
+    //Verifying fields in the Info tab
+        cy.contains('QA Auto').should('exist')
+        cy.contains('CLIENT URL').should('exist')
+        cy.contains('Regions').should('exist')
+        cy.contains('RELATIONSHIP').should('exist')
+        cy.contains('INDUSTRIES').should('exist')
+        cy.contains('LEAD STATUS').should('exist')
+        cy.contains('LANGUAGES').should('exist')
+    //Validating Client Name
+       /*
+        cy.contains('QA Auto').clear()
+        //cy.get('#Agency-Form_9').clear()
+        cy.get('.MuiButton-contained > .MuiButton-label').click()
+        cy.contains('This is a required field').should('exist')
+        cy.get('textarea').type('QA Auto')
+        //cy.get('#Agency-Form_9').type('QA Auto ')
+    */
+    //Validating Client URL
+        cy.get('.MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').clear()
+        cy.get('[type=submit]').click()
+        cy.contains('This field is a required').should('exist')
+        cy.get('.MuiPaper-root > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type('qaauto')
+    //Validating Region field
+        cy.get('input[name=keywordField]').type("India{enter}")
+        cy.get('input[name=keywordField]').type("German{enter}")
+        cy.get('.MuiButton-contained > .MuiButton-label').click()
+        cy.wait(2000)
+        cy.contains('Agency Edited Successfully').should('exist')
+    /*    
+        cy.wait(1000)
+
+    //Validating 'Relationship' field
+        //cy.get('.jss681 > .MuiButtonBase-root > .MuiButton-label').click()
+        cy.get('[class=MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary]').click()
+        cy.get('input[name=keywordField]').type("Relation1{enter}")
+        cy.get('input[name=keywordField]').type("Relation2{enter}")
+        cy.contains('SUBMIT').click()
+        
+        //cy.get('.jss709 > .jss674 > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type("Relation1{enter}")
+        //cy.get('.jss709 > .jss674 > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type("Relation2{enter}")
+        //cy.get('.jss716 > .MuiButton-contained > .MuiButton-label').click()
+        cy.wait(3000)
+        cy.contains("RELATION Updated").should('exist')
+    //Validating 'Industries' field
+        cy.get('.jss687 > .MuiButtonBase-root > .MuiButton-label').click()
+        cy.get('.jss740 > .jss674 > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type("Industry1{enter}")
+        cy.get('.jss740 > .jss674 > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type("Industry2{enter}")
+        cy.get('.jss747 > .MuiButton-contained > .MuiButton-label').click()
+        cy.wait(3000)
+        cy.contains('INDUSTRY Updated').should('exist')
+    //Validating 'Lead Status' field
+        cy.get('.jss693 > .MuiButtonBase-root > .MuiButton-label').click()
+        cy.get('.jss765 > .jss674 > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type("Lead1{enter}")
+        cy.get('.jss765 > .jss674 > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').type("Lead2{enter}")
+        cy.get('.jss772 > .MuiButton-contained > .MuiButton-label').click()
+        cy.wait(3000)
+        cy.contains('LEVEL Updated').should('exist')
+     */
+      
+    })
+
+
+  
+    it('Validating Owners Tab', () => {
+    
+    //click on the Owners tab
+        cy.contains('Owners').click()
+    //create owner
+        cy.get('.MuiFab-label > .MuiSvgIcon-root > path').click()
+
+    //check existing fields
+        cy.contains('First Name').should('exist')
+        cy.contains('Last Name').should('exist')
+        cy.contains('Email').should('exist')
+        cy.contains('ADD PARTICIPANT').should('exist')
+        cy.contains('Send Invite').should('exist')
+    
+    //check with empty data
+        cy.get('[type=submit]').click()
+        cy.contains('This is required').should('exist')
+    
+    //input invalid Email
+        cy.get('input[name=email]').type('test')
+        cy.get('[type=submit]').click()
+        cy.contains('Email is invalid').should('exist')
+    
+    //clear text
+    cy.get('[name=email]').clear() 
+    //input valid Email
+        cy.get('input[name=firstName]').type('Pooja')
+        cy.get('input[name=lastName]').type('BK')
+        cy.get('input[name=email]').type('test@test.com')
+        cy.get('[type=submit]').click()
+        cy.wait(1000)
+        cy.contains('1 new event owners onboarded successfully').should('exist')
+
+    //create another owner
+        cy.get('.MuiFab-label > .MuiSvgIcon-root > path').click()
+    
+    //input valid Email
+        cy.get('input[name=firstName]').type('Tester')
+        cy.get('input[name=lastName]').type('test')
+        cy.get('input[name=email]').type('new@test.com')
+        cy.get('[type=submit]').click()
+        cy.wait(1000)
+        cy.contains('1 new event owners onboarded successfully').should('exist')
+/*
+
+    //delete Event Owner
+        cy.get('.jss753 > .MuiButtonBase-root > .MuiFab-label > .MuiSvgIcon-root').click()
+    //cancel delete request
+        cy.contains('Cancel').click()
+    //delete Event Owner
+        cy.get('.jss753 > .MuiButtonBase-root > .MuiFab-label > .MuiSvgIcon-root').click()
+        cy.contains('Yes').click()
+        cy.contains('Event owner removed successfully.').should('exist')
+*/
+        
+    })
+
+
+/*
+
+    it('Validating Comms Tab', () => {
+    //click on the Comms tab
+        cy.contains('Comms').click()
+        //cy.contains('Reset Password').should('exist')
+    //add template
+    //cy.get('.jss720 > .MuiButtonBase-root > .MuiButton-label').click()
+    //check with empty data
+        cy.contains('ADD TEMPLATE').click()
+        cy.get('[type=submit]').click()
+        cy.wait(2000)
+        cy.contains('TEMPLATE NAME(internal purpose only)').should('exist')
+        cy.contains('EMAIL SUBJECT').should('exist')
+        //cy.get('.jss748 > .MuiFormControl-fullWidth > .MuiFormControl-root > .MuiInputBase-root > .MuiInputBase-input').click()
+        //cy.contains('TEMPLATE NAME(internal purpose only)*').click()
+        //cy.get('/html[1]/body[1]/div[4]/div[3]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/input[1]').scrollIntoView().should('be.visible')
+        cy.get('input[name=name]').type('test')
+        cy.get('input[name=senderEmail]').type('new test')
+        cy.get('input[name=senderName]').type('Pooja')
+        cy.get('input[name=subject]').type('testing')
+        cy.get('[type=submit]').click()
+
+
+
+
+    })
+*/
+
+
+    it('Validating Strategic Accounts tab', () => {
+    
+    //Click on the Strategic account tab
+       cy.contains('Strategic Accounts').click()
+ 
+    //Click on the + button to create new Strategic Accounts
+       cy.get('.MuiFab-label > .MuiSvgIcon-root').click()
+ 
+    //Verifying fields in the Add Strategic account page
+        cy.contains('Add Strategic account').should('exist')
+        cy.contains('BANNER Desktop Recommended size: 1920 x 500').should('exist')
+        cy.contains('BANNER Mobile Recommended size: 800 x 880').should('exist')
+        cy.contains('Logo Recommended size: 800 x 800').should('exist')
+        cy.contains('Name').should('exist')
+        cy.contains('Website').should('exist')
+        cy.contains('Partner Domains').should('exist')
+        cy.contains('CLOSE').should('exist')
+        cy.contains('SUBMIT').should('exist')
+ 
+    //Validating CLOSE button
+    //cy.get('.jss715 > .MuiButton-text > .MuiButton-label').click()
+        cy.contains('CLOSE').click()
+        cy.contains('Strategic Accounts').should('exist')
+       //cy.get('.jss605 > .MuiButtonBase-root').should('exist')
+        cy.get('.MuiFab-label > .MuiSvgIcon-root').click()
+ 
+    //Validating Name field
+        cy.contains('SUBMIT').click();
+        cy.contains('This is required').should('exist')
+       
+    //Validating Website field
+        cy.get('input[name=website]').type('google')
+        cy.contains('Incorrect format').should('exist')
+ 
+    //Create New Strategic account with valid input 
+        //cy.get('#strategic-partner-form_20').clear()
+        cy.get('[name=website]').clear()
+        cy.get('input[name=name]').type('QAonCloud')
+        cy.get('input[name=website]').type('https://www.qaoncloud.com')
+        cy.get('input[name=keywordField]').type('qaoncloud{enter}')
+    //cy.contains('Partner Domains').type('qaoncloud{enter}')
+        cy.contains('SUBMIT').click()
+      
+    //Validating successfull creation
+        cy.wait(2000)
+        cy.contains('New Strategic Account added successfully').should('exist')
+        cy.contains('QAonCloud').should('exist')
+        cy.contains('Edit').should('exist')
+ 
+  })
+
+})
